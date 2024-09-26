@@ -14,8 +14,6 @@
  */
 
 import java.util.Scanner;
-import java.nio.channels.Pipe.SourceChannel;
-import java.text.spi.NumberFormatProvider;
 import java.util.InputMismatchException;
 
 public class IT2A_Group2_Lab3 {
@@ -113,7 +111,7 @@ public class IT2A_Group2_Lab3 {
         break;
       case 3:
         // Insertion Sort
-        System.out.println("Insertion Sort - In development");
+        insertionSort(currentArray);
         break;
     }
   }
@@ -235,6 +233,68 @@ public class IT2A_Group2_Lab3 {
       }
 
     }
+  }
+
+  // Insetion Sort - Ipei
+
+  public static void insertionSort(int[] array) {
+    // No need to check if array exists.
+    // Because the user wouldn't be able to sort if they haven't created the array
+    // in the first place.
+    int array_length = array.length;
+
+    // i starts from the 2nd number in the array, i.e the 1st index.
+    for (int i = 1; i < array_length; ++i) {
+      int key = array[i];
+      // second pointer. In the first loop, it points to the 0th index.
+      int j = i - 1;
+
+      // while j is non-negative, and the number it's pointing at is
+      // greater than the key value
+      while (j >= 0 && array[j] > key) {
+        // move the value to the right.
+        array[j + 1] = array[j];
+        // And decrement.
+        j -= 1;
+      }
+      // When j becomes -1, it means that the current key's value is the lowest,
+      // therefore becoming array[0] = key;
+
+      // But when the current key's value is the greast amongst the already sorted
+      // values (the left side), it "skips" it. Putting the greatest value in its
+      // place.
+
+      // and when the current key is not the lowest but is less than the value before
+      // it moves the greater value in its index (array[j+1]). and moving the key to
+      // the left.
+
+      array[j + 1] = key;
+      // Display changes each itereation
+      printArray(array, i);
+    }
+
+  }
+
+  // Print array - Ipei
+  public static void printArray(int[] array, int iteration) {
+    switch (iteration) {
+      case 1:
+        System.out.print("1st Swap: ");
+        break;
+      case 2:
+        System.out.print("2nd Swap: ");
+        break;
+      case 3:
+        System.out.print("3rd Swap: ");
+        break;
+      default:
+        System.out.print(iteration + "th Swap: ");
+        break;
+    }
+    for (int i = 0; i < array.length; i++) {
+      System.err.print(array[i] + " ");
+    }
+    System.err.println();
   }
 }
 

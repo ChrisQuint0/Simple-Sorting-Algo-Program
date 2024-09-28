@@ -244,12 +244,11 @@ public class IT2A_Group2_Lab3 {
     int array_length = array.length;
 
     // 9 / 28 : Show Given Array Elements
-    System.err.print("Given Array Elements: ");
-    System.out.println();
+    System.err.print("\n\nGiven Array Elements: ");
     for (int i = 0; i < array.length; i++) {
-      System.out.printf("%9d", array[i]);
+      System.out.printf("%-6d", array[i]);
     }
-    System.out.println();
+    System.out.println("\n");
 
     // i starts from the 2nd number in the array, i.e the 1st index.
     for (int i = 1; i < array_length; ++i) {
@@ -282,12 +281,11 @@ public class IT2A_Group2_Lab3 {
     }
 
     // 9 / 28: Show Sorted Array Elements
-    System.err.print("The Sorted Array Elements: ");
-    System.out.println();
+    System.err.print("\nThe Sorted Array Elements: ");
     for (int i = 0; i < array.length; i++) {
-      System.out.printf("%9d", array[i]);
+      System.out.printf("%-6d", array[i]);
     }
-    System.out.println();
+    System.out.println("\n");
 
   }
 
@@ -298,7 +296,7 @@ public class IT2A_Group2_Lab3 {
     for (int j = 0; j < array.length; j++) {
       System.err.printf("%9d", array[j]);
     }
-    System.err.println();
+    System.err.println("");
   }
 
 }

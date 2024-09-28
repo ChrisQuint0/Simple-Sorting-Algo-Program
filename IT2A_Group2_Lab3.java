@@ -86,6 +86,85 @@ public class IT2A_Group2_Lab3 {
         executeChoice(choice);
       } while (choice != 4);
 
+      String again = "";
+
+      while (true) {
+        try {
+          System.out.print("Try Again (Y/N)?: ");
+          again = sc.next();
+
+        } catch (InputMismatchException e) {
+          sc.next();
+
+          utils.clearScreen();
+
+          asc.displayErrorAscii();
+
+          System.out.println("Invalid Input (Type Mismatch). Please Enter Y/N\n");
+
+          utils.pause();
+
+          utils.clearScreen();
+
+          continue;
+        }
+
+        if (again.length() > 1) {
+
+          utils.clearScreen();
+
+          asc.displayErrorAscii();
+
+          System.out.println("Invalid Input (Length). Please Enter Y/N\n");
+
+          utils.pause();
+
+          sc.nextLine();
+
+          utils.clearScreen();
+
+          continue;
+        }
+
+        break;
+      }
+
+      while (true) {
+        char userInput = again.toLowerCase().charAt(0);
+
+        if (userInput == 'y') {
+          choiceAgain = 0;
+
+          break;
+        } else if (userInput == 'n') {
+          choiceAgain = -99;
+
+          utils.clearScreen();
+
+          asc.displayQuitAscii();
+
+          System.out.println("\nQuit Successful\n");
+
+          utils.pause();
+          utils.clearScreen();
+          break;
+        } else {
+          utils.clearScreen();
+
+          asc.displayErrorAscii();
+
+          System.out.println("Invalid Input (Not Y or N). Please Enter Y/N\n");
+
+          utils.pause();
+
+          sc.next();
+
+          utils.clearScreen();
+
+          continue;
+        }
+      }
+
     } while (choiceAgain != -99);
 
   }
@@ -109,7 +188,7 @@ public class IT2A_Group2_Lab3 {
         break;
       case 2:
         // Selection Sort
-        System.out.println("Selection Sort - In development");
+        selectSort(currentArray);
         break;
       case 3:
         // Insertion Sort
@@ -231,11 +310,93 @@ public class IT2A_Group2_Lab3 {
 
         validInput = true;
 
+        for (int i = 0; i < currentArray.length; i++) {
+          for (int j = i + 1; j < currentArray.length; j++) {
+            if (currentArray[i] == currentArray[j]) {
+              utils.clearScreen();
+
+              asc.displayErrorAscii();
+
+              System.out.println("\nInvalid Input. Duplicate elements detected.");
+
+              utils.pause();
+
+              utils.clearScreen();
+              validInput = false;
+              break;
+            } else if (currentArray[i] == 0) {
+              utils.clearScreen();
+
+              asc.displayErrorAscii();
+
+              System.out.println("\nInvalid Input. 0 or Null element/s detected.");
+
+              utils.pause();
+
+              utils.clearScreen();
+              validInput = false;
+              break;
+            }
+          }
+
+          if (!validInput) {
+            break;
+          }
+        }
+
         utils.clearScreen();
       }
 
     }
   }
+
+  public static void selectSort(int[] array) {
+    utils.clearScreen();
+
+    asc.displaySelectionAscii();
+
+    System.out.print("\nGiven Array Elements: ");
+    printArray(array);
+    System.out.println();
+
+    int[] tempArray = array.clone();
+
+    int n = tempArray.length;
+
+    for (int i = 0; i < n - 1; i++) {
+      int min = i;
+
+      for (int j = i + 1; j < n; j++) {
+        if (tempArray[j] < tempArray[min]) {
+          min = j;
+        }
+      }
+
+      int temp = tempArray[min];
+      tempArray[min] = tempArray[i];
+      tempArray[i] = temp;
+
+      System.out.print(i + 1 + ". ");
+
+      printArray(tempArray);
+    }
+
+    System.out.print("\nThe Sorted Array Elements: ");
+    printArray(tempArray);
+    System.out.println();
+
+    utils.pause();
+    utils.clearScreen();
+  }
+
+  public static void printArray(int[] array) {
+    for (int element : array) {
+      System.out.printf("%9d", element);
+    }
+
+    System.out.println();
+  }
+
 }
 
 class Utils {
@@ -292,10 +453,28 @@ class Ascii {
   }
 
   public void displayInsertAscii() {
-    System.out.println("_____                     _  ");
-    System.out.println("\\_   \\_ __  ___  ___ _ __| |_ ");
-    System.out.println(" / /\\| '_ \\/ __|/ _ | '__| __| ");
+    System.out.println("  _____                     _  ");
+    System.out.println("  \\_   \\_ __  ___  ___ _ __| |_ ");
+    System.out.println("   / /\\| '_ \\/ __|/ _ | '__| __| ");
     System.out.println("/\\/ /_ | | | \\__ |  __| |  | |_  ");
     System.out.println("\\____/ |_| |_|___/\\___|_|   \\__| ");
+  }
+
+  public void displaySelectionAscii() {
+    System.out.println(" __      _           _   _               __            _   ");
+    System.out.println("/ _\\ ___| | ___  ___| |_(_) ___  _ __   / _\\ ___  _ __| |_ ");
+    System.out.println("\\ \\ / _ \\ |/ _ \\/ __| __| |/ _ \\| '_ \\  \\ \\ / _ \\| '__| __|");
+    System.out.println("_\\ \\  __/ |  __/ (__| |_| | (_) | | | | _\\ \\ (_) | |  | |_ ");
+    System.out.println("\\__/\\___|_|\\___|\\___|\\__|_|\\___/|_| |_| \\__/\\___/|_|   \\__|");
+    System.out.println("                                                           ");
+  }
+
+  public void displayQuitAscii() {
+    System.out.println("   __      _ _   ");
+    System.out.println("  /__\\_  _(_) |_ ");
+    System.out.println(" /_\\ \\ \\/ / | __|");
+    System.out.println("//__  >  <| | |_ ");
+    System.out.println("\\__/ /_/\\_\\_|\\__|");
+    System.out.println("                 ");
   }
 }

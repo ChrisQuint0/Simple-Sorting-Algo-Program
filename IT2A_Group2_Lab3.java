@@ -243,6 +243,14 @@ public class IT2A_Group2_Lab3 {
     // in the first place.
     int array_length = array.length;
 
+    // 9 / 28 : Show Given Array Elements
+    System.err.print("Given Array Elements: ");
+    System.out.println();
+    for (int i = 0; i < array.length; i++) {
+      System.out.printf("%9d", array[i]);
+    }
+    System.out.println();
+
     // i starts from the 2nd number in the array, i.e the 1st index.
     for (int i = 1; i < array_length; ++i) {
       int key = array[i];
@@ -273,29 +281,26 @@ public class IT2A_Group2_Lab3 {
       printArray(array, i);
     }
 
+    // 9 / 28: Show Sorted Array Elements
+    System.err.print("The Sorted Array Elements: ");
+    System.out.println();
+    for (int i = 0; i < array.length; i++) {
+      System.out.printf("%9d", array[i]);
+    }
+    System.out.println();
+
   }
 
   // Print array - Ipei
   public static void printArray(int[] array, int iteration) {
-    switch (iteration) {
-      case 1:
-        System.out.print("1st Swap: ");
-        break;
-      case 2:
-        System.out.print("2nd Swap: ");
-        break;
-      case 3:
-        System.out.print("3rd Swap: ");
-        break;
-      default:
-        System.out.print(iteration + "th Swap: ");
-        break;
-    }
-    for (int i = 0; i < array.length; i++) {
-      System.err.print(array[i] + " ");
+
+    System.out.print(iteration + ".  ");
+    for (int j = 0; j < array.length; j++) {
+      System.err.printf("%9d", array[j]);
     }
     System.err.println();
   }
+
 }
 
 class Utils {

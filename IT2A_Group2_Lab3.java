@@ -62,7 +62,7 @@ public class IT2A_Group2_Lab3 {
 
             asc.displayErrorAscii();
 
-            System.out.println("\nInvalid input. Please enter an integer.");
+            System.out.println("\nInvalid input. Please enter an integer.\n");
 
             utils.pause();
 
@@ -73,8 +73,16 @@ public class IT2A_Group2_Lab3 {
             continue;
           }
 
-          if (choice < 0 || choice > 4) {
-            System.out.println("Invalid input! Please enter a value between 0 and 4.");
+          if (choice < 1 || choice > 4) {
+            utils.clearScreen();
+
+            asc.displayErrorAscii();
+
+            System.out.println("\nInvalid input! Please enter a value between 1 and 4.\n");
+
+            utils.pause();
+
+            utils.clearScreen();
 
             continue;
           } else {
@@ -85,10 +93,13 @@ public class IT2A_Group2_Lab3 {
       } while (choice != 4);
 
       String again = "";
+      utils.clearScreen();
 
       while (true) {
         try {
-          System.out.print("Try Again (Y/N)?: ");
+          asc.displayContinueAscii();
+
+          System.out.print("\nTry Again (Y/N)?: ");
           again = sc.next();
 
         } catch (InputMismatchException e) {
@@ -98,7 +109,7 @@ public class IT2A_Group2_Lab3 {
 
           asc.displayErrorAscii();
 
-          System.out.println("Invalid Input (Type Mismatch). Please Enter Y/N\n");
+          System.out.println("\nInvalid Input. Please Enter Y/N\n");
 
           utils.pause();
 
@@ -113,7 +124,7 @@ public class IT2A_Group2_Lab3 {
 
           asc.displayErrorAscii();
 
-          System.out.println("Invalid Input (Length). Please Enter Y/N\n");
+          System.out.println("Invalid Input. Please Enter Y/N\n");
 
           utils.pause();
 
@@ -124,14 +135,12 @@ public class IT2A_Group2_Lab3 {
           continue;
         }
 
-        break;
-      }
-
-      while (true) {
         char userInput = again.toLowerCase().charAt(0);
 
         if (userInput == 'y') {
           choiceAgain = 0;
+
+          utils.clearScreen();
 
           break;
         } else if (userInput == 'n') {
@@ -147,15 +156,16 @@ public class IT2A_Group2_Lab3 {
           utils.clearScreen();
           break;
         } else {
+
           utils.clearScreen();
+
+          sc.nextLine();
 
           asc.displayErrorAscii();
 
-          System.out.println("Invalid Input (Not Y or N). Please Enter Y/N\n");
+          System.out.println("\nInvalid Input. Please Enter Y/N\n");
 
           utils.pause();
-
-          sc.next();
 
           utils.clearScreen();
 
@@ -168,6 +178,8 @@ public class IT2A_Group2_Lab3 {
   }
 
   public static void displayMenu() {
+    utils.clearScreen();
+
     asc.displayProgramHeading();
 
     System.out.println("                                  MENU\n");
@@ -181,15 +193,12 @@ public class IT2A_Group2_Lab3 {
   public static void executeChoice(int choice) {
     switch (choice) {
       case 1:
-        // Bubble Sort
-        System.out.println("Bubble Sort - In development");
+        bubbleSort(currentArray);
         break;
       case 2:
-        // Selection Sort
         selectSort(currentArray);
         break;
       case 3:
-        // Insertion Sort
         insertionSort(currentArray);
         break;
     }
@@ -266,7 +275,8 @@ public class IT2A_Group2_Lab3 {
 
         asc.displayErrorAscii();
 
-        System.out.println("\nYou entered too few numbers, Please enter exactly " + currentArray.length + " numbers\n");
+        System.out.println("\nYour input is either incorrect or contains too few numbers, Please enter exactly "
+            + currentArray.length + " numbers\n");
 
         utils.pause();
 
@@ -297,7 +307,7 @@ public class IT2A_Group2_Lab3 {
 
           asc.displayErrorAscii();
 
-          System.out.println("\nInvalid Input. Please enter valid elements for all integers.");
+          System.out.println("\nInvalid Input. Please enter valid integers for all elements.\n");
 
           utils.pause();
 
@@ -315,7 +325,7 @@ public class IT2A_Group2_Lab3 {
 
               asc.displayErrorAscii();
 
-              System.out.println("\nInvalid Input. Duplicate elements detected.");
+              System.out.println("\nInvalid Input. Duplicate elements detected.\n");
 
               utils.pause();
 
@@ -327,7 +337,7 @@ public class IT2A_Group2_Lab3 {
 
               asc.displayErrorAscii();
 
-              System.out.println("\nInvalid Input. 0 or Null element/s detected.");
+              System.out.println("\nInvalid Input. 0 or Null element/s detected.\n");
 
               utils.pause();
 
@@ -348,10 +358,104 @@ public class IT2A_Group2_Lab3 {
     }
   }
 
+  // Bubble Sort - Josh
+  // For better understanding refer to the video sent by Quinto in the GC
+  public static void bubbleSort(int[] array) {
+    utils.clearScreen();
+    // Clone the array so that the original will not be affected
+    int[] tempArray = array.clone();
 
-  // Insetion Sort - Ipei
+    utils.clearScreen();
+    asc.displayBubbleAscii();
 
-  public static void insertionSort(int[] array) {
+    // Print the array before sorting
+    System.out.print("\nGiven Array Elements: ");
+    printArray9d(tempArray);
+
+    int n = tempArray.length;
+
+    boolean isSwapped = false; // Declare a boolean for the bubble boolean flag used for efficiency
+
+    for (int i = 0; i < n - 1; i++) { // Up to the second to the last element only
+      isSwapped = false;
+
+      for (int j = 0; j < n - 1 - i; j++) { // Up to second to the last element minus the number of the elements that
+                                            // was already sorted
+        if (tempArray[j] > tempArray[j + 1]) {
+          int temp = tempArray[j];
+          tempArray[j] = tempArray[j + 1];
+          tempArray[j + 1] = temp;
+
+          isSwapped = true;
+        }
+      }
+
+      if (isSwapped == false) {
+        break;
+      }
+
+      System.out.print("\n" + (i + 1) + ". "); // Prints the current iteration of the array
+      printArray(tempArray);
+    }
+
+    // Prints the final sorted array
+    System.out.println();
+    System.out.print("The Sorted Array Elements: ");
+    printArray9d(tempArray);
+
+    utils.pause();
+    utils.clearScreen();
+
+  }
+
+  // Select Sort - Quinto
+  public static void selectSort(int[] array) {
+    utils.clearScreen();
+
+    asc.displaySelectionAscii();
+
+    System.out.print("\nGiven Array Elements: ");
+    printArray9d(array);
+    System.out.println();
+
+    int[] tempArray = array.clone();
+
+    int n = tempArray.length;
+
+    for (int i = 0; i < n - 1; i++) { // The pointer i will up to the second to the last element
+      int min = i; // The min pointer will be at the position i
+
+      for (int j = i + 1; j < n; j++) { // Pointer j will start at i + 1 index and will iterate until the last element
+        if (tempArray[j] < tempArray[min]) {
+          min = j;
+        }
+      }
+
+      int temp = tempArray[min];
+      tempArray[min] = tempArray[i];
+      tempArray[i] = temp;
+
+      System.out.print(i + 1 + ". "); // Prints the current iteration after swapping
+      printArray(tempArray);
+      System.out.println();
+    }
+
+    System.out.print("\nThe Sorted Array Elements: ");
+    printArray9d(tempArray);
+    System.out.println();
+
+    utils.pause();
+    utils.clearScreen();
+  }
+
+  // Insertion Sort-Ipei
+
+  public static void insertionSort(int[] currentArray) {
+    utils.clearScreen();
+
+    asc.displayInsertionAscii();
+
+    int[] array = currentArray.clone();
     // No need to check if array exists.
     // Because the user wouldn't be able to sort if they haven't created the array
     // in the first place.
@@ -359,10 +463,7 @@ public class IT2A_Group2_Lab3 {
 
     // 9 / 28 : Show Given Array Elements
     System.err.print("\n\nGiven Array Elements: ");
-    for (int i = 0; i < array.length; i++) {
-      System.out.printf("%-6d", array[i]);
-    }
-    System.out.println("\n");
+    printArray9d(array);
 
     // i starts from the 2nd number in the array, i.e the 1st index.
     for (int i = 1; i < array_length; ++i) {
@@ -392,50 +493,12 @@ public class IT2A_Group2_Lab3 {
       array[j + 1] = key;
       // Display changes each itereation
       printArray(array, i);
+      System.out.println();
     }
 
     // 9 / 28: Show Sorted Array Elements
-    System.err.print("\nThe Sorted Array Elements: ");
-    for (int i = 0; i < array.length; i++) {
-      System.out.printf("%-6d", array[i]);
-    }
-    System.out.println("\n");
-  }
-
-  public static void selectSort(int[] array) {
-    utils.clearScreen();
-
-    asc.displaySelectionAscii();
-
-    System.out.print("\nGiven Array Elements: ");
-    printArray(array);
-    System.out.println();
-
-    int[] tempArray = array.clone();
-
-    int n = tempArray.length;
-
-    for (int i = 0; i < n - 1; i++) {
-      int min = i;
-
-      for (int j = i + 1; j < n; j++) {
-        if (tempArray[j] < tempArray[min]) {
-          min = j;
-        }
-      }
-
-      int temp = tempArray[min];
-      tempArray[min] = tempArray[i];
-      tempArray[i] = temp;
-
-      System.out.print(i + 1 + ". ");
-
-      printArray(tempArray);
-    }
-
     System.out.print("\nThe Sorted Array Elements: ");
-    printArray(tempArray);
-    System.out.println();
+    printArray9d(array);
 
     utils.pause();
     utils.clearScreen();
@@ -448,15 +511,23 @@ public class IT2A_Group2_Lab3 {
 
     System.out.println();
   }
-  
-   public static void printArray(int[] array, int iteration) {
+
+  // PrintArray - Ipei Version
+  public static void printArray(int[] array, int iteration) {
 
     System.out.print(iteration + ".  ");
     for (int j = 0; j < array.length; j++) {
       System.err.printf("%9d", array[j]);
     }
     System.err.println("");
-   }
+  }
+
+  public static void printArray9d(int[] array) {
+    for (int i = 0; i < array.length; i++) {
+      System.out.printf("%-9d", array[i]);
+    }
+    System.out.println("\n");
+  }
 
 }
 
@@ -528,6 +599,33 @@ class Ascii {
     System.out.println("_\\ \\  __/ |  __/ (__| |_| | (_) | | | | _\\ \\ (_) | |  | |_ ");
     System.out.println("\\__/\\___|_|\\___|\\___|\\__|_|\\___/|_| |_| \\__/\\___/|_|   \\__|");
     System.out.println("                                                           ");
+  }
+
+  public void displayBubbleAscii() {
+    System.out.println("   ___       _     _     _        __            _   ");
+    System.out.println("  / __\\_   _| |__ | |__ | | ___  / _\\ ___  _ __| |_ ");
+    System.out.println(" /__\\// | | | '_ \\| '_ \\| |/ _ \\ \\ \\ / _ \\| '__| __|");
+    System.out.println("/ \\/  \\ |_| | |_) | |_) | |  __/ _\\ \\ (_) | |  | |_ ");
+    System.out.println("\\_____/\\__,_|_.__/|_.__/|_|\\___| \\__/\\___/|_|   \\__|");
+    System.out.println("                                                    ");
+  }
+
+  public void displayInsertionAscii() {
+    System.out.println("  _____                     _   _               __            _   ");
+    System.out.println("  \\_   \\_ __  ___  ___ _ __| |_(_) ___  _ __   / _\\ ___  _ __| |_ ");
+    System.out.println("   / /\\/ '_ \\/ __|/ _ \\ '__| __| |/ _ \\| '_ \\  \\ \\ / _ \\| '__| __|");
+    System.out.println("/\\/ /_ | | | \\__ \\  __/ |  | |_| | (_) | | | | _\\ \\ (_) | |  | |_ ");
+    System.out.println("\\____/ |_| |_|___/\\___|_|   \\__|_|\\___/|_| |_| \\__/\\___/|_|   \\__|");
+    System.out.println("                                                                  ");
+  }
+
+  public void displayContinueAscii() {
+    System.out.println("   ___            _   _                  ___ ");
+    System.out.println("  / __\\___  _ __ | |_(_)_ __  _   _  ___/ _ \\");
+    System.out.println(" / /  / _ \\| '_ \\| __| | '_ \\| | | |/ _ \\// /");
+    System.out.println("/ /__| (_) | | | | |_| | | | | |_| |  __/ \\/ ");
+    System.out.println("\\____/\\___/|_| |_|\\__|_|_| |_|\\__,_|\\___| () ");
+    System.out.println("                                             ");
   }
 
   public void displayQuitAscii() {
